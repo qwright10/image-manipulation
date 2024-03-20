@@ -2,6 +2,7 @@
 // Created by lcadmin on 20.03.24.
 //
 
+#include <cstring>
 #include <fstream>
 #include "streamutils.h"
 
@@ -13,7 +14,7 @@ T read_stream(std::basic_ifstream<char>& stream) {
     stream.read(raw, size);
 
     T data;
-    memcpy(&data, raw, size);
+    std::memcpy(&data, raw, size);
 
     return data;
 }
