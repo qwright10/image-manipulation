@@ -36,7 +36,7 @@ public:
     Header header;
     RGB<>* data;
 
-    TGA(const Header header, const RGB<>* copying);
+    TGA(const Header header, RGB<>* copying);
     TGA(std::basic_ifstream<char>& stream);
     ~TGA();
 

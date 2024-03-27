@@ -188,14 +188,7 @@ TGA::TGA(std::basic_ifstream<char> &stream): header(stream) {
     }
 }
 
-TGA::TGA(const TGA::Header header, const RGB<> *copying): header(header) {
-    const auto size = header.size();
-    data = new RGB<>[size];
-
-    for (auto i = 0; i < size; i++) {
-        data[i] = copying[i];
-    }
-}
+TGA::TGA(const TGA::Header header, RGB<> *copying): header(header), data(copying) {}
 
 TGA::~TGA() {
     delete[] data;
