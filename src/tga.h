@@ -7,10 +7,9 @@
 
 #include <cstdint>
 #include <fstream>
+#include <vector>
 #include "blend.h"
 #include "rgb.h"
-
-#define SIZE 262144
 
 struct TGA {
 public:
@@ -36,9 +35,9 @@ public:
     };
 
     Header header;
-    RGB<> data[SIZE];
+    std::vector<RGB<>> data;
 
-    TGA(const Header header, RGB<> copying[SIZE]);
+    TGA(const Header header, std::vector<RGB<>> copying);
     TGA(std::basic_ifstream<char>& stream);
 
     static TGA from_file(const char* path);

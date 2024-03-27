@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <vector>
 
 #include "rgb.h"
 #include "streamutils.h"
@@ -62,7 +63,7 @@ TGA TGA::from_file(const char *path) {
 TGA TGA::blend(const BlendMode mode, const TGA &top, const TGA &bottom) {
     Header header(top.header);
     const auto size = header.width * header.height;
-    RGB<> data[SIZE];
+    std::vector<RGB<>> data;
 
     auto blend_method = blend_addition;
 
@@ -81,7 +82,7 @@ TGA TGA::blend(const BlendMode mode, const TGA &top, const TGA &bottom) {
 
 TGA TGA::adding(int16_t dR, int16_t dG, int16_t dB) const {
     const auto size = header.size();
-    RGB<> nd[SIZE];
+    std::vector<RGB<>> nd;
 
     for (auto i = 0; i < size; i++) {
         auto pixel = data[i].unclamped();
@@ -97,7 +98,7 @@ TGA TGA::adding(int16_t dR, int16_t dG, int16_t dB) const {
 
 TGA TGA::extract_channel(const int channel) const {
     const auto size = header.size();
-    RGB<> nd[SIZE];
+    std::vector<RGB<>> nd;
 
     for (auto i = 0; i < size; i++) {
         const auto pixel = data[i];
@@ -112,7 +113,7 @@ TGA TGA::extract_channel(const int channel) const {
 }
 
 TGA TGA::flipped() const {
-    RGB<> nd[SIZE];
+    std::vector<RGB<>> nd;
 
     //for (auto i = 0; i < SIZE; i++) {
     //    nd[i] = data[SIZE - i - 1];
@@ -123,7 +124,7 @@ TGA TGA::flipped() const {
 
 TGA TGA::monochrome(const int channel) const {
     const auto size = header.size();
-    RGB<> nd[SIZE];
+    std::vector<RGB<>> nd;
 
     for (auto i = 0; i < size; i++) {
         const auto pixel = data[i];
@@ -140,7 +141,7 @@ TGA TGA::monochrome(const int channel) const {
 
 TGA TGA::scaling(int16_t sR, int16_t sG, int16_t sB) const {
     const auto size = header.size();
-    RGB<> nd[SIZE];
+    std::vector<RGB<>> nd;
 
     for (auto i = 0; i < size; i++) {
         auto pixel = data[i].unclamped();
@@ -186,9 +187,9 @@ TGA::TGA(std::basic_ifstream<char> &stream): header(stream) {
     }
 }
 
-TGA::TGA(const TGA::Header header, RGB<> copying[SIZE]): header(header) {
-    for (int i = 0; i < SIZE; i++) {
-        data[i] = copying[i];
+TGA::TGA(const TGA::Header header, std::vector<RGB<>> copying): header(header) {
+    for (const auto pixel: copying) {
+        data.push_back(pixel);
     }
 }
 
