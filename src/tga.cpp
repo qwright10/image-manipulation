@@ -87,9 +87,9 @@ TGA TGA::adding(int dR, int dG, int dB) const {
     for (auto i = 0; i < size; i++) {
         auto pixel = data[i].unclamped();
         nd.push_back(RGB<int16_t>{
-                (short)(pixel.r + (short)clamp(dR, -255, 255)),
-                (short)(pixel.g + (short)clamp(dG, -255, 255)),
-                (short)(pixel.b + (short)clamp(dB, -255, 255)),
+                (short)pixel.r + (short)clamp(dR, -255, 255),
+                (short)pixel.g + (short)clamp(dG, -255, 255),
+                (short)pixel.b + (short)clamp(dB, -255, 255),
         }.clamped());
     }
 
