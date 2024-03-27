@@ -14,36 +14,36 @@ const T& clamp(const T& value, const T& min, const T& max) {
 template<typename T>
 RGB<double> RGB<T>::normalized() const {
     return {
-        (double)r / 255.0,
-        (double)g / 255.0,
-        (double)b / 255.0
+        static_cast<double>(r / 255.0),
+        static_cast<double>(g / 255.0),
+        static_cast<double>(b / 255.0)
     };
 }
 
 template<typename T>
 RGB<uint8_t> RGB<T>::denormalized() const  {
     return {
-        (uint8_t)(r * 255 + 0.5),
-        (uint8_t)(g * 255 + 0.5),
-        (uint8_t)(b * 255 + 0.5)
+        static_cast<uint8_t>(r * 255 + 0.5),
+        static_cast<uint8_t>(g * 255 + 0.5),
+        static_cast<uint8_t>(b * 255 + 0.5)
     };
 }
 
 template<typename T>
 RGB<uint8_t> RGB<T>::clamped() const {
     return {
-        (uint8_t)clamp(r, (T)0, (T)255),
-        (uint8_t)clamp(g, (T)0, (T)255),
-        (uint8_t)clamp(b, (T)0, (T)255)
+        static_cast<uint8_t>(clamp(r, (T)0, (T)255)),
+        static_cast<uint8_t>(clamp(g, (T)0, (T)255)),
+        static_cast<uint8_t>(clamp(b, (T)0, (T)255))
     };
 }
 
 template<typename T>
 RGB<int16_t> RGB<T>::unclamped() const {
     return {
-        (int16_t)r,
-        (int16_t)g,
-        (int16_t)b
+        static_cast<int16_t>(r),
+        static_cast<int16_t>(g),
+        static_cast<int16_t>(b)
     };
 }
 

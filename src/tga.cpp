@@ -102,9 +102,9 @@ TGA TGA::extract_channel(const int channel) const {
     for (auto i = 0; i < size; i++) {
         const auto pixel = data[i];
         nd[i] = RGB<>{
-                (uint8_t)(channel == 0 ? pixel.r : 0),
-                (uint8_t)(channel == 1 ? pixel.g : 0),
-                (uint8_t)(channel == 2 ? pixel.b : 0),
+                static_cast<uint8_t>(channel == 0 ? pixel.r : 0),
+                static_cast<uint8_t>(channel == 1 ? pixel.g : 0),
+                static_cast<uint8_t>(channel == 2 ? pixel.b : 0),
         };
     }
 
