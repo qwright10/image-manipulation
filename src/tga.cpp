@@ -47,8 +47,6 @@ int TGA::Header::size() const {
 }
 
 TGA TGA::from_file(const char *path) {
-    std::cout << "Reading: " << path << std::endl;
-
     std::ifstream file;
     file.open(path);
 
@@ -188,8 +186,6 @@ TGA::TGA(std::basic_ifstream<char> &stream): header(stream) {
 
         data[i] = { red, green, blue };
     }
-
-    std::cout << "Read " << dataLen * 3 << " bytes of color data\n";
 }
 
 TGA::TGA(const TGA::Header header, const RGB<> *copying): header(header) {
