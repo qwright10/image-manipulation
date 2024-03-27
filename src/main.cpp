@@ -117,14 +117,21 @@ int main(int argc, char* _argv[]) {
         return image;
     };
 
+    bool has_run = false;
+
     while (true) {
         const auto method = read_string(false);
 
-        if (method == nullptr) break;
+        if (method == nullptr) {
+            if (has_run) break;
+
+            std::cerr << "Invalid method name." << std::endl;
+            exit(1);
+        }
+
+        has_run = true;
         
         const auto m = *method;
-
-        std::cerr << "Something here" << std::endl;
 
         if (m == "multiply") {
             const auto other = read_file_into_tga();

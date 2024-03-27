@@ -74,7 +74,7 @@ TGA TGA::blend(const BlendMode mode, const TGA &top, const TGA &bottom) {
     if (mode == BlendMode::subtract) blend_method = blend_subtract;
 
     for (auto i = 0; i < size; i++) {
-        data[i] = blend_method(top.data[i], bottom.data[i]);
+        data.push_back(blend_method(top.data[i], bottom.data[i]));
     }
 
     return TGA(Header(header), data);
@@ -183,7 +183,8 @@ TGA::TGA(std::basic_ifstream<char> &stream): header(stream) {
         auto green = read_stream_u8(stream);
         auto red = read_stream_u8(stream);
 
-        data[i] = { red, green, blue };
+        RGB<> pixel{red, green, blue};
+        data.push_back(pixel);
     }
 }
 
