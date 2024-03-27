@@ -43,7 +43,7 @@ public:
     static TGA from_file(const char* path);
     static TGA blend(const BlendMode mode, const TGA& top, const TGA& bottom);
 
-    TGA adding(int16_t dR, int16_t dG, int16_t dB) const;
+    TGA adding(int dR, int dG, int dB) const;
     TGA extract_channel(const int channel) const;
     TGA flipped() const;
     TGA monochrome(const int channel) const;

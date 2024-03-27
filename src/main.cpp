@@ -148,7 +148,9 @@ int main(int argc, char* _argv[]) {
         } else if (m == "combine") {
             const auto green = read_file_into_tga();
             const auto blue = read_file_into_tga();
-            tracking = tracking.add(green).add(blue);
+            tracking = tracking.monochrome(0)
+                    .add(green.monochrome(1))
+                    .add(blue.monochrome(2));
         } else if (m == "flip") {
             tracking = tracking.flipped();
         } else if (m == "onlyred") {
@@ -159,6 +161,7 @@ int main(int argc, char* _argv[]) {
             tracking = tracking.monochrome(2);
         } else if (m == "addred") {
             const auto delta = read_int();
+            std::cout << "Adding: " << delta << " to red" << std::endl;
             tracking = tracking.adding(delta, 0, 0);
         } else if (m == "addgreen") {
             const auto delta = read_int();

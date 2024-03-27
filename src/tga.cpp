@@ -80,16 +80,16 @@ TGA TGA::blend(const BlendMode mode, const TGA &top, const TGA &bottom) {
     return TGA(Header(header), data);
 }
 
-TGA TGA::adding(int16_t dR, int16_t dG, int16_t dB) const {
+TGA TGA::adding(int dR, int dG, int dB) const {
     const auto size = header.size();
     std::vector<RGB<>> nd;
 
     for (auto i = 0; i < size; i++) {
         auto pixel = data[i].unclamped();
         nd.push_back(RGB<int16_t>{
-                (short)(pixel.r + dR),
-                (short)(pixel.g + dG),
-                (short)(pixel.b + dB),
+                (short)(pixel.r + (short)clamp(dR, 0, 255)),
+                (short)(pixel.g + (short)clamp(dG, 0, 255)),
+                (short)(pixel.b + (short)clamp(dB, 0, 255)),
         }.clamped());
     }
 
