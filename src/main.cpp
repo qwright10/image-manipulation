@@ -148,9 +148,9 @@ int main(int argc, char* _argv[]) {
         } else if (m == "combine") {
             const auto green = read_file_into_tga();
             const auto blue = read_file_into_tga();
-            tracking = tracking.monochrome(0)
-                    .add(green.monochrome(1))
-                    .add(blue.monochrome(2));
+            tracking = tracking.extract_channel(0)
+                    .add(green.extract_channel(1))
+                    .add(blue.extract_channel(2));
         } else if (m == "flip") {
             tracking = tracking.flipped();
         } else if (m == "onlyred") {
