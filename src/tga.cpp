@@ -86,11 +86,11 @@ TGA TGA::adding(int16_t dR, int16_t dG, int16_t dB) const {
 
     for (auto i = 0; i < size; i++) {
         auto pixel = data[i].unclamped();
-        nd[i] = RGB<int16_t>{
+        nd.push_back(RGB<int16_t>{
                 (short)(pixel.r + dR),
                 (short)(pixel.g + dG),
                 (short)(pixel.b + dB),
-        }.clamped();
+        }.clamped());
     }
 
     return TGA(Header(header), nd);
@@ -102,11 +102,11 @@ TGA TGA::extract_channel(const int channel) const {
 
     for (auto i = 0; i < size; i++) {
         const auto pixel = data[i];
-        nd[i] = RGB<>{
+        nd.push_back(RGB<>{
                 static_cast<uint8_t>(channel == 0 ? pixel.r : 0),
                 static_cast<uint8_t>(channel == 1 ? pixel.g : 0),
                 static_cast<uint8_t>(channel == 2 ? pixel.b : 0),
-        };
+        });
     }
 
     return TGA(Header(header), nd);
@@ -133,7 +133,7 @@ TGA TGA::monochrome(const int channel) const {
         if (channel == 1) value = pixel.g;
         if (channel == 2) value = pixel.b;
 
-        nd[i] = RGB<>{ value, value, value };
+        nd.push_back(RGB<>{ value, value, value });
     }
 
     return TGA(Header(header), nd);
@@ -145,11 +145,11 @@ TGA TGA::scaling(int16_t sR, int16_t sG, int16_t sB) const {
 
     for (auto i = 0; i < size; i++) {
         auto pixel = data[i].unclamped();
-        nd[i] = RGB<int16_t>{
+        nd.push_back(RGB<int16_t>{
                 (short)(pixel.r * sR),
                 (short)(pixel.g * sG),
                 (short)(pixel.b * sB),
-        }.clamped();
+        }.clamped());
     }
 
     return TGA(Header(header), nd);
