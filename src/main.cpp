@@ -81,7 +81,7 @@ int main(int argc, char* _argv[]) {
         try {
             return clamp(std::stoi(str->c_str()), 0, 255);
         } catch (const std::exception& error) {
-            std::cerr << "Invalid argument, expected number" << std::endl;
+            std::cerr << "Invalid argument, expected number." << std::endl;
             exit(1);
         }
     };
@@ -162,6 +162,9 @@ int main(int argc, char* _argv[]) {
         } else if (*method == "scaleblue") {
             const auto scale = read_int();
             tracking = tracking.scaling(0, 0, scale);
+        } else {
+            std::cerr << "Invalid method name." << std::endl;
+            return 1;
         }
     }
 
