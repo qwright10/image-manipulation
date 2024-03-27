@@ -168,13 +168,13 @@ int main(int argc, char* _argv[]) {
             tracking = tracking.adding(0, 0, delta);
         } else if (m == "scalered") {
             const auto scale = read_int();
-            tracking = tracking.scaling(scale, 0, 0);
+            tracking = tracking.scaling(scale, 1, 1);
         } else if (m == "scalegreen") {
             const auto scale = read_int();
-            tracking = tracking.scaling(0, scale, 0);
+            tracking = tracking.scaling(1, scale, 1);
         } else if (m == "scaleblue") {
             const auto scale = read_int();
-            tracking = tracking.scaling(0, 0, scale);
+            tracking = tracking.scaling(1, 1, scale);
         } else {
             std::cerr << "Invalid method name." << std::endl;
             return 1;
