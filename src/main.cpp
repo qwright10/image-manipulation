@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
 
 bool ends_with(const std::string& str, const char* suffix) {
     if (str.length() < strlen(suffix)) return false;
