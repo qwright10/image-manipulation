@@ -5,6 +5,7 @@
 #ifndef IMAGE_PROCESSING_STREAMUTILS_H
 #define IMAGE_PROCESSING_STREAMUTILS_H
 
+#include <cstdint>
 #include <fstream>
 
 uint8_t read_stream_u8(std::basic_ifstream<char>& stream);
