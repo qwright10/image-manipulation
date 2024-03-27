@@ -107,6 +107,7 @@ int main(int argc, char* _argv[]) {
         file.open(filename);
         if (!file.is_open()) {
             std::cerr << "Invalid argument, file does not exist.";
+            exit(1);
         }
 
         const TGA image(file);
