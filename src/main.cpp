@@ -132,7 +132,7 @@ int main(int argc, char* _argv[]) {
         } else if (m == "subtract") {
             const auto bottom = read_file_into_tga();
             tracking = bottom.subtract(tracking);
-        }/* else if (m == "overlay") {
+        } else if (m == "overlay") {
             const auto bottom = read_file_into_tga();
             tracking = bottom.overlay(tracking);
         } else if (m == "screen") {
@@ -153,7 +153,7 @@ int main(int argc, char* _argv[]) {
         } else if (m == "addred") {
             const auto delta = read_int();
             tracking = tracking.adding(delta, 0, 0);
-        }*/ else if (m == "addgreen") {
+        } else if (m == "addgreen") {
             const auto delta = read_int();
             tracking = tracking.adding(0, delta, 0);
         } else if (m == "addblue") {
