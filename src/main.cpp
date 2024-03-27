@@ -80,7 +80,7 @@ int main(int argc, char* _argv[]) {
         const auto str = read_string(true);
 
         try {
-            return clamp(std::stoi(str->c_str()), 0, 255);
+            return std::stoi(str->c_str());
         } catch (const std::exception& error) {
             std::cerr << "Invalid argument, expected number." << std::endl;
             exit(1);
