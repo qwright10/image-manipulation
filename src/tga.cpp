@@ -115,9 +115,9 @@ TGA TGA::extract_channel(const int channel) const {
 TGA TGA::flipped() const {
     std::vector<RGB<>> nd;
 
-    //for (auto i = 0; i < SIZE; i++) {
-    //    nd[i] = data[SIZE - i - 1];
-    //}
+    for (auto i = 0; i < data.size(); i++) {
+        nd.push_back(data[data.size() - i - 1]);
+    }
 
     return TGA(Header(header), nd);
 }
