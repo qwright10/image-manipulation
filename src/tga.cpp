@@ -199,6 +199,7 @@ TGA::TGA(const TGA::Header header, const RGB<> *copying): header(header) {
 
 TGA::~TGA() {
     delete[] data;
+    data = nullptr;
 }
 
 void TGA::write(std::basic_ofstream<char> &stream) const {
