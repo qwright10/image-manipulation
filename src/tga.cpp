@@ -25,8 +25,8 @@ TGA::Header::Header(const TGA::Header &copying) {
 }
 
 TGA::Header::Header(std::basic_ifstream<char> &stream) {
-    auto read_8 = [&stream]() { return read_stream<uint8_t>(stream); };
-    auto read_16 = [&stream]() { return read_stream<uint16_t>(stream); };
+    auto read_8 = [&stream]() { return read_stream_u8(stream); };
+    auto read_16 = [&stream]() { return read_stream_u16(stream); };
 
     idLength = read_8();
     colorMapType = read_8();
@@ -180,9 +180,9 @@ TGA::TGA(std::basic_ifstream<char> &stream): header(stream) {
     data = new RGB<>[dataLen];
 
     for (auto i = 0; i < dataLen; i++) {
-        auto blue = read_stream<uint8_t>(stream);
-        auto green = read_stream<uint8_t>(stream);
-        auto red = read_stream<uint8_t>(stream);
+        auto blue = read_stream_u8(stream);
+        auto green = read_stream_u8(stream);
+        auto red = read_stream_u8(stream);
 
         data[i] = { red, green, blue };
     }
@@ -202,18 +202,18 @@ TGA::~TGA() {
 }
 
 void TGA::write(std::basic_ofstream<char> &stream) const {
-    write_stream<uint8_t>(stream, header.idLength);
-    write_stream<uint8_t>(stream, header.colorMapType);
-    write_stream<uint8_t>(stream, header.imageType);
-    write_stream<uint16_t>(stream, header.colorMapStart);
-    write_stream<uint16_t>(stream, header.colorMapLength);
-    write_stream<uint8_t>(stream, header.colorMapBitDepth);
-    write_stream<uint16_t>(stream, header.xOrigin);
-    write_stream<uint16_t>(stream, header.yOrigin);
-    write_stream<uint16_t>(stream, header.width);
-    write_stream<uint16_t>(stream, header.height);
-    write_stream<uint8_t>(stream, header.bitDepth);
-    write_stream<uint8_t>(stream, header.descriptor);
+    write_stream_u8(stream, header.idLength);
+    write_stream_u8(stream, header.colorMapType);
+    write_stream_u8(stream, header.imageType);
+    write_stream_u16(stream, header.colorMapStart);
+    write_stream_u16(stream, header.colorMapLength);
+    write_stream_u8(stream, header.colorMapBitDepth);
+    write_stream_u16(stream, header.xOrigin);
+    write_stream_u16(stream, header.yOrigin);
+    write_stream_u16(stream, header.width);
+    write_stream_u16(stream, header.height);
+    write_stream_u8(stream, header.bitDepth);
+    write_stream_u8(stream, header.descriptor);
 
     const auto s = header.width * header.height;
     for (auto i = 0; i < s; i++) {
@@ -222,9 +222,9 @@ void TGA::write(std::basic_ofstream<char> &stream) const {
         const uint8_t green = pixel.g;
         const uint8_t blue = pixel.b;
 
-        write_stream(stream, blue);
-        write_stream(stream, green);
-        write_stream(stream, red);
+        write_stream_u8(stream, blue);
+        write_stream_u8(stream, green);
+        write_stream_u8(stream, red);
     }
 }
 

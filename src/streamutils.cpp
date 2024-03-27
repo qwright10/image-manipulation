@@ -6,30 +6,42 @@
 #include <fstream>
 #include "streamutils.h"
 
-template<typename T>
-T read_stream(std::basic_ifstream<char>& stream) {
-    const auto size = sizeof(T);
+uint8_t read_stream_u8(std::basic_ifstream<char>& stream) {
+    const auto size = sizeof(uint8_t);
 
     char raw[size];
     stream.read(raw, size);
 
-    T data;
+    uint8_t data;
     std::memcpy(&data, raw, size);
 
     return data;
 }
 
-template uint8_t read_stream(std::basic_ifstream<char>& stream);
-template uint16_t read_stream(std::basic_ifstream<char>& stream);
+uint16_t read_stream_u16(std::basic_ifstream<char>& stream) {
+    const auto size = sizeof(uint16_t);
 
-template<typename T>
-void write_stream(std::basic_ofstream<char>& stream, T value) {
-    const auto s = sizeof(T);
+    char raw[size];
+    stream.read(raw, size);
+
+    uint16_t data;
+    std::memcpy(&data, raw, size);
+
+    return data;
+}
+
+void write_stream_u8(std::basic_ofstream<char>& stream, uint8_t value) {
+    const auto s = sizeof(uint8_t);
     char src[s];
 
     std::memcpy(src, &value, s);
     stream.write(src, s);
 }
 
-template void write_stream(std::basic_ofstream<char>& stream, uint8_t value);
-template void write_stream(std::basic_ofstream<char>& stream, uint16_t value);
+void write_stream_u16(std::basic_ofstream<char>& stream, uint16_t value) {
+    const auto s = sizeof(uint16_t);
+    char src[s];
+
+    std::memcpy(src, &value, s);
+    stream.write(src, s);
+}

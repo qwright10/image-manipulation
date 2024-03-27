@@ -7,10 +7,10 @@
 
 #include <fstream>
 
-template<typename T>
-T read_stream(std::basic_ifstream<char>& stream);
+uint8_t read_stream_u8(std::basic_ifstream<char>& stream);
+uint16_t read_stream_u16(std::basic_ifstream<char>& stream);
 
-template<typename T>
-void write_stream(std::basic_ofstream<char>& stream, T value);
+void write_stream_u8(std::basic_ofstream<char>& stream, uint8_t value);
+void write_stream_u16(std::basic_ofstream<char>& stream, uint16_t value);
 
 #endif //IMAGE_PROCESSING_STREAMUTILS_H
