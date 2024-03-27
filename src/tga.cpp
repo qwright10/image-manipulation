@@ -229,11 +229,7 @@ void TGA::write(std::basic_ofstream<char> &stream) const {
 }
 
 void TGA::write(const char *s) const {
-    std::ofstream file;
-    file.open(s);
-    if (!file || !file.is_open()) {
-        throw std::runtime_error("Failed to open file!");
-    }
+    std::ofstream file(s);
 
     write(file);
     file.close();
