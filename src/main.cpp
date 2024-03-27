@@ -29,6 +29,7 @@ int main(int argc, char* _argv[]) {
         return 0;
     }
 
+
     if (argc == 2) {
         if (!argv[1].compare("--help")) {
             print_help();
@@ -120,47 +121,51 @@ int main(int argc, char* _argv[]) {
         const auto method = read_string(false);
 
         if (method == nullptr) break;
+        
+        const auto m = *method;
 
-        if (*method == "multiply") {
+        std::cerr << "Something here" << std::endl;
+
+        if (m == "multiply") {
             const auto other = read_file_into_tga();
             tracking = tracking.multiply(other);
-        } else if (*method == "subtract") {
+        } else if (m == "subtract") {
             const auto bottom = read_file_into_tga();
             tracking = bottom.subtract(tracking);
-        } else if (*method == "overlay") {
+        }/* else if (m == "overlay") {
             const auto bottom = read_file_into_tga();
             tracking = bottom.overlay(tracking);
-        } else if (*method == "screen") {
+        } else if (m == "screen") {
             const auto top = read_file_into_tga();
             tracking = tracking.screen(top);
-        } else if (*method == "combine") {
+        } else if (m == "combine") {
             const auto green = read_file_into_tga();
             const auto blue = read_file_into_tga();
             tracking = tracking.add(green).add(blue);
-        } else if (*method == "flip") {
+        } else if (m == "flip") {
             tracking = tracking.flipped();
-        } else if (*method == "onlyred") {
+        } else if (m == "onlyred") {
             tracking = tracking.monochrome(0);
-        } else if (*method == "onlygreen") {
+        } else if (m == "onlygreen") {
             tracking = tracking.monochrome(1);
-        } else if (*method == "onlyblue") {
+        } else if (m == "onlyblue") {
             tracking = tracking.monochrome(2);
-        } else if (*method == "addred") {
+        } else if (m == "addred") {
             const auto delta = read_int();
             tracking = tracking.adding(delta, 0, 0);
-        } else if (*method == "addgreen") {
+        }*/ else if (m == "addgreen") {
             const auto delta = read_int();
             tracking = tracking.adding(0, delta, 0);
-        } else if (*method == "addblue") {
+        } else if (m == "addblue") {
             const auto delta = read_int();
             tracking = tracking.adding(0, 0, delta);
-        } else if (*method == "scalered") {
+        } else if (m == "scalered") {
             const auto scale = read_int();
             tracking = tracking.scaling(scale, 0, 0);
-        } else if (*method == "scalegreen") {
+        } else if (m == "scalegreen") {
             const auto scale = read_int();
             tracking = tracking.scaling(0, scale, 0);
-        } else if (*method == "scaleblue") {
+        } else if (m == "scaleblue") {
             const auto scale = read_int();
             tracking = tracking.scaling(0, 0, scale);
         } else {

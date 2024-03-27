@@ -1,5 +1,5 @@
 build:
-	g++ -Wall -std=c++11 -o project2.out ./src/*.cpp
+	g++ -Wall -O0 -std=c++11 -o project2.out ./src/*.cpp
 
 .PHONY:
 	clean

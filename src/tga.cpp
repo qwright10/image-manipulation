@@ -62,7 +62,7 @@ TGA TGA::from_file(const char *path) {
 TGA TGA::blend(const BlendMode mode, const TGA &top, const TGA &bottom) {
     Header header(top.header);
     const auto size = header.width * header.height;
-    RGB<>* data = new RGB<>[size];
+    RGB<> data[SIZE];
 
     auto blend_method = blend_addition;
 
@@ -76,12 +76,12 @@ TGA TGA::blend(const BlendMode mode, const TGA &top, const TGA &bottom) {
         data[i] = blend_method(top.data[i], bottom.data[i]);
     }
 
-    return TGA{ header, data };
+    return TGA(Header(header), data);
 }
 
 TGA TGA::adding(int16_t dR, int16_t dG, int16_t dB) const {
     const auto size = header.size();
-    RGB<>* nd = new RGB<>[size];
+    RGB<> nd[SIZE];
 
     for (auto i = 0; i < size; i++) {
         auto pixel = data[i].unclamped();
@@ -92,12 +92,12 @@ TGA TGA::adding(int16_t dR, int16_t dG, int16_t dB) const {
         }.clamped();
     }
 
-    return TGA{Header(header), nd};
+    return TGA(Header(header), nd);
 }
 
 TGA TGA::extract_channel(const int channel) const {
     const auto size = header.size();
-    RGB<>* nd = new RGB<>[size];
+    RGB<> nd[SIZE];
 
     for (auto i = 0; i < size; i++) {
         const auto pixel = data[i];
@@ -108,23 +108,22 @@ TGA TGA::extract_channel(const int channel) const {
         };
     }
 
-    return TGA{header, nd};
+    return TGA(Header(header), nd);
 }
 
 TGA TGA::flipped() const {
-    const auto size = header.size();
-    RGB<>* nd = new RGB<>[size];
+    RGB<> nd[SIZE];
 
-    for (auto i = 0; i < size; i++) {
-        nd[i] = data[size - i - 1];
-    }
+    //for (auto i = 0; i < SIZE; i++) {
+    //    nd[i] = data[SIZE - i - 1];
+    //}
 
-    return TGA{ header, nd };
+    return TGA(Header(header), nd);
 }
 
 TGA TGA::monochrome(const int channel) const {
     const auto size = header.size();
-    RGB<>* nd = new RGB<>[size];
+    RGB<> nd[SIZE];
 
     for (auto i = 0; i < size; i++) {
         const auto pixel = data[i];
@@ -136,12 +135,12 @@ TGA TGA::monochrome(const int channel) const {
         nd[i] = RGB<>{ value, value, value };
     }
 
-    return TGA{header, nd};
+    return TGA(Header(header), nd);
 }
 
 TGA TGA::scaling(int16_t sR, int16_t sG, int16_t sB) const {
     const auto size = header.size();
-    RGB<>* nd = new RGB<>[size];
+    RGB<> nd[SIZE];
 
     for (auto i = 0; i < size; i++) {
         auto pixel = data[i].unclamped();
@@ -152,7 +151,7 @@ TGA TGA::scaling(int16_t sR, int16_t sG, int16_t sB) const {
         }.clamped();
     }
 
-    return TGA{Header(header), nd};
+    return TGA(Header(header), nd);
 }
 
 TGA TGA::add(const TGA &top) const {
@@ -177,7 +176,6 @@ TGA TGA::subtract(const TGA &top) const {
 
 TGA::TGA(std::basic_ifstream<char> &stream): header(stream) {
     unsigned int dataLen = header.width * header.height;
-    data = new RGB<>[dataLen];
 
     for (auto i = 0; i < dataLen; i++) {
         auto blue = read_stream_u8(stream);
@@ -188,11 +186,10 @@ TGA::TGA(std::basic_ifstream<char> &stream): header(stream) {
     }
 }
 
-TGA::TGA(const TGA::Header header, RGB<> *copying): header(header), data(copying) {}
-
-TGA::~TGA() {
-    delete[] data;
-    data = nullptr;
+TGA::TGA(const TGA::Header header, RGB<> copying[SIZE]): header(header) {
+    for (int i = 0; i < SIZE; i++) {
+        data[i] = copying[i];
+    }
 }
 
 void TGA::write(std::basic_ofstream<char> &stream) const {

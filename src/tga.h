@@ -10,6 +10,8 @@
 #include "blend.h"
 #include "rgb.h"
 
+#define SIZE 262144
+
 struct TGA {
 public:
     struct Header {
@@ -34,11 +36,10 @@ public:
     };
 
     Header header;
-    RGB<>* data;
+    RGB<> data[SIZE];
 
-    TGA(const Header header, RGB<>* copying);
+    TGA(const Header header, RGB<> copying[SIZE]);
     TGA(std::basic_ifstream<char>& stream);
-    ~TGA();
 
     static TGA from_file(const char* path);
     static TGA blend(const BlendMode mode, const TGA& top, const TGA& bottom);
